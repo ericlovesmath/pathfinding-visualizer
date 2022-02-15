@@ -1,3 +1,3 @@
 # Pathfinding Visualizer
 
-Pathfinding visualizer in pure HTML/CSS/TS to understand web development better
+Pathfinding visualizer in pure HTML/CSS/TS to understand web development!
