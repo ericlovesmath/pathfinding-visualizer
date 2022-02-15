@@ -4,7 +4,7 @@
   "description": "Pathfinding visualizer in pure HTML/CSS/TS to understand web development!",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon dist/app.js",
+    "dev": "live-server",
     "watch": "tsc --watch",
     "build": "tsc",
     "test": "jest",

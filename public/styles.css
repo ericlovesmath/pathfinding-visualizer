@@ -1,0 +1,40 @@
+* { 
+    -moz-box-sizing: border-box; 
+    -webkit-box-sizing: border-box; 
+     box-sizing: border-box; 
+}
+
+body {
+    background-color: #DEDEDB;
+    font-family: Futura, "Trebuchet MS", Arial, sans-serif; 
+    font-size: 15px;
+    margin: 0px;
+    overflow-y: hidden;
+}
+
+header {
+    background-color: #28A282;
+    padding: 0.5rem 0;
+    text-align: center;
+    color: #FFF;
+    text-transform: uppercase;
+    margin: 0px;
+    margin-bottom: 50px;
+}
+
+footer {
+    background-color: #e8bb68;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    padding: 1rem 1rem;
+    font-size: 15px;
+}
+
+a:visited {
+  color: darkblue;
+}
+
+a:hover {
+  color: blue;
+}
