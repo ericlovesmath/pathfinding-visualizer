@@ -5,7 +5,7 @@
 }
 
 body {
-    background-color: #DEDEDB;
+    background-color: #b2d9ff;
     font-family: Futura, "Trebuchet MS", Arial, sans-serif; 
     font-size: 15px;
     margin: 0px;
@@ -13,12 +13,21 @@ body {
 }
 
 header {
+    /* position: absolute; */
     background-color: #28A282;
     padding: 0.5rem 0;
     text-align: center;
     color: #FFF;
     text-transform: uppercase;
     margin: 0px;
+}
+
+#navbar {
+    display: flex;
+    margin: 0px;
+    margin-bottom: 50px;
+    background-color: #76B7DA;
+    padding: 10px
 }
 
 #container {
@@ -40,12 +49,14 @@ footer {
     display: inline-grid;
     grid-template-columns: repeat(var(--width), 40px);
     grid-template-rows: repeat(var(--height), 40px);
+    border: 3px solid black;
+    padding: 3px;
+    gap: 3px;
 }
 
 #grid .node {
-    margin-bottom: -1px;
-    margin-right: -1px;
     border: 1px solid black;
+    background-color: #e1e4e5;
 }
 
 a:visited {
@@ -54,4 +65,15 @@ a:visited {
 
 a:hover {
   color: blue;
+}
+
+#navbar input {
+    width: 60px;
+    margin: 10px;
+    box-sizing: border-box;
+}
+
+#navbar button {
+    margin: 10px;
+    box-sizing: border-box;
 }
