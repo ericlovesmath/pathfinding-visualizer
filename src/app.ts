@@ -1,9 +1,10 @@
-const WIDTH = 20;
-const HEIGHT = 10;
-document.documentElement.style.setProperty("--width", WIDTH.toString());
-document.documentElement.style.setProperty("--height", HEIGHT.toString());
+let WIDTH = 20;
+let HEIGHT = 10;
 
 const gridElem = document.querySelector('#grid') as HTMLDivElement;
+const updateGridBtn = document.querySelector('#update-button') as HTMLButtonElement;
+const widthInput = document.querySelector('#width-input') as HTMLInputElement;
+const heightInput = document.querySelector('#height-input') as HTMLInputElement;
 
 const CELL_TYPE = {
     START: "start",
@@ -19,15 +20,18 @@ type cell = {
     type: string;
 }
 
-const grid: cell[][] = createGrid();
+main();
 
-grid.forEach((row) => {
-    row.forEach((node) => {
-        gridElem.append(node.elem);
-    })
-})
+function main() {
+    updateCSSVars();
+    const grid: cell[][] = createGrid();
+    updateGridBtn.addEventListener('click', updateGrid);
+}
 
 export function createGrid(): cell[][] {
+    while (gridElem.firstChild) {
+        gridElem.removeChild(gridElem.firstChild);
+    }
     const grid: cell[][] = [];
 
     for (let x = 0; x < WIDTH; x++) {
@@ -46,6 +50,25 @@ export function createGrid(): cell[][] {
         }
         grid.push(row);
     }
+    grid.forEach((row) => {
+        row.forEach((node) => {
+            gridElem.append(node.elem);
+            node.elem.addEventListener('onclick', clickedNode);
+        })
+    })
     return grid;
 }
 
+export function clickedNode(e: Event) { }
+
+export function updateGrid(e: Event) {
+    WIDTH = Number(widthInput.value);
+    HEIGHT = Number(heightInput.value);
+    createGrid();
+    updateCSSVars();
+}
+
+export function updateCSSVars() {
+    document.documentElement.style.setProperty("--width", WIDTH.toString());
+    document.documentElement.style.setProperty("--height", HEIGHT.toString());
+}
