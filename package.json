@@ -10,8 +10,7 @@
     "test": "jest",
     "lint": "eslint src/ --ext .js,.jsx,.ts,.tsx",
     "clean": "rm -rf dist build",
-    "deploy": "npm run build && gh-pages -d .",
-    "temp": "gh-pages --help"
+    "deploy": "npm run build && gh-pages -d ."
   },
   "repository": {
     "type": "git",
