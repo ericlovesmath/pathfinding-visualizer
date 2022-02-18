@@ -4,6 +4,8 @@
      box-sizing: border-box; 
 }
 
+/* Main */
+
 body {
     background-color: #b2d9ff;
     font-family: Futura, "Trebuchet MS", Arial, sans-serif; 
@@ -45,6 +47,8 @@ footer {
     font-size: 15px;
 }
 
+/* Grid */
+
 #grid {
     display: inline-grid;
     grid-template-columns: repeat(var(--width), 40px);
@@ -59,6 +63,24 @@ footer {
     background-color: #e1e4e5;
 }
 
+#grid .node[data-type="empty"] {
+    background-color: #EEE;
+}
+
+#grid .node[data-type="wall"] {
+    background-color: #555;
+}
+
+#grid .node[data-type="start"] {
+    background-color: green;
+}
+
+#grid .node[data-type="end"] {
+    background-color: red;
+}
+
+
+
 a:visited {
   color: darkblue;
 }
@@ -67,13 +89,13 @@ a:hover {
   color: blue;
 }
 
-#navbar input {
+#navbar input,button,select {
     width: 60px;
     margin: 10px;
     box-sizing: border-box;
 }
 
-#navbar button {
-    margin: 10px;
-    box-sizing: border-box;
+#navbar select {
+    width: auto;
 }
+

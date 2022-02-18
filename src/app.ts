@@ -25,10 +25,12 @@ main();
 function main() {
     updateCSSVars();
     const grid: cell[][] = createGrid();
-    updateGridBtn.addEventListener('click', updateGrid);
+    updateGridBtn.addEventListener('click', createGrid);
 }
 
 export function createGrid(): cell[][] {
+    WIDTH = Number(widthInput.value);
+    HEIGHT = Number(heightInput.value);
     while (gridElem.firstChild) {
         gridElem.removeChild(gridElem.firstChild);
     }
@@ -44,8 +46,8 @@ export function createGrid(): cell[][] {
                 elem,
                 x,
                 y,
-                get type() { return elem.dataset.status! },
-                set type(value: string) { this.type = value }
+                get type() { return elem.dataset.type! },
+                set type(value: string) { this.elem.dataset.type = value }
             });
         }
         grid.push(row);
@@ -53,20 +55,17 @@ export function createGrid(): cell[][] {
     grid.forEach((row) => {
         row.forEach((node) => {
             gridElem.append(node.elem);
-            node.elem.addEventListener('onclick', clickedNode);
+            node.elem.addEventListener('click', () => { clickedNode(node) });
         })
     })
+    updateCSSVars();
     return grid;
 }
 
-export function clickedNode(e: Event) { }
-
-export function updateGrid(e: Event) {
-    WIDTH = Number(widthInput.value);
-    HEIGHT = Number(heightInput.value);
-    createGrid();
-    updateCSSVars();
+export function clickedNode(node: cell) {
+    node.type = CELL_TYPE.WALL;
 }
+
 
 export function updateCSSVars() {
     document.documentElement.style.setProperty("--width", WIDTH.toString());
