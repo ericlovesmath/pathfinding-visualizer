@@ -1,16 +1,18 @@
 import { gridElem, updateGridBtn, widthInput, heightInput, nodeTypeSelector, NODE_TYPE } from './types.js';
 let WIDTH = 20;
 let HEIGHT = 10;
-let CURRENT_NODE = "wall";
+let CURRENT_MODE = NODE_TYPE.WALL;
+let start_node;
+let end_node;
+const GRID = createGrid();
 main();
 function main() {
     updateCSSVars();
-    const grid = createGrid();
     updateGridBtn.addEventListener('click', createGrid);
     nodeTypeSelector.addEventListener("click", selectNodeType);
 }
 export function selectNodeType(e) {
-    CURRENT_NODE = e.target.value;
+    CURRENT_MODE = e.target.value;
 }
 export function createGrid() {
     WIDTH = Number(widthInput.value);
@@ -49,7 +51,20 @@ export function createGrid() {
     return grid;
 }
 export function fillNode(node) {
-    node.type = CURRENT_NODE;
+    console.log(start_node, node);
+    if (CURRENT_MODE == NODE_TYPE.START) {
+        if (typeof start_node !== 'undefined') {
+            start_node.type = NODE_TYPE.EMPTY;
+        }
+        start_node = node;
+    }
+    else if (CURRENT_MODE == NODE_TYPE.END) {
+        if (typeof end_node !== 'undefined') {
+            end_node.type = NODE_TYPE.EMPTY;
+        }
+        end_node = node;
+    }
+    node.type = CURRENT_MODE;
 }
 export function clearNode(node) {
     node.type = NODE_TYPE.EMPTY;

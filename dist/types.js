@@ -9,5 +9,8 @@ const NODE_TYPE = {
     WALL: "wall",
     EMPTY: "empty"
 };
-export { gridElem, updateGridBtn, widthInput, heightInput, nodeTypeSelector, NODE_TYPE };
+const POS_TYPE = {
+    NONE: { x: -1, y: -1 }
+};
+export { gridElem, updateGridBtn, widthInput, heightInput, nodeTypeSelector, NODE_TYPE, POS_TYPE };
 //# sourceMappingURL=types.js.map
