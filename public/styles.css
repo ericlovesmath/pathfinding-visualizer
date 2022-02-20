@@ -7,7 +7,8 @@
 /* Main */
 
 body {
-    background-color: #b2d9ff;
+    /* background-color: #b2d9ff; */
+    background-color: #999;
     font-family: Futura, "Trebuchet MS", Arial, sans-serif; 
     font-size: 15px;
     margin: 0px;
@@ -53,9 +54,9 @@ footer {
     display: inline-grid;
     grid-template-columns: repeat(var(--width), 40px);
     grid-template-rows: repeat(var(--height), 40px);
-    border: 3px solid black;
-    padding: 3px;
-    gap: 3px;
+    border: 2px solid black;
+    padding: 2px;
+    gap: 2px;
 }
 
 #grid .node {
@@ -72,14 +73,12 @@ footer {
 }
 
 #grid .node[data-type="start"] {
-    background-color: green;
+    background-color: lime;
 }
 
 #grid .node[data-type="end"] {
     background-color: red;
 }
-
-
 
 a:visited {
   color: darkblue;

@@ -1,47 +1,36 @@
+import { gridElem, updateGridBtn, widthInput, heightInput, nodeTypeSelector, NODE_TYPE, node } from './types.js';
+
 let WIDTH = 20;
 let HEIGHT = 10;
-
-const gridElem = document.querySelector('#grid') as HTMLDivElement;
-const updateGridBtn = document.querySelector('#update-button') as HTMLButtonElement;
-const widthInput = document.querySelector('#width-input') as HTMLInputElement;
-const heightInput = document.querySelector('#height-input') as HTMLInputElement;
-
-const CELL_TYPE = {
-    START: "start",
-    END: "end",
-    WALL: "wall",
-    EMPTY: "empty"
-}
-
-type cell = {
-    elem: HTMLDivElement;
-    x: number;
-    y: number;
-    type: string;
-}
+let CURRENT_NODE = "wall"
 
 main();
 
 function main() {
     updateCSSVars();
-    const grid: cell[][] = createGrid();
+    const grid: node[][] = createGrid();
     updateGridBtn.addEventListener('click', createGrid);
+    nodeTypeSelector.addEventListener("click", selectNodeType);
 }
 
-export function createGrid(): cell[][] {
+export function selectNodeType(e: Event) {
+    CURRENT_NODE = (<HTMLOptionElement>e.target).value;
+}
+
+export function createGrid(): node[][] {
     WIDTH = Number(widthInput.value);
     HEIGHT = Number(heightInput.value);
     while (gridElem.firstChild) {
         gridElem.removeChild(gridElem.firstChild);
     }
-    const grid: cell[][] = [];
+    const grid: node[][] = [];
 
     for (let x = 0; x < WIDTH; x++) {
-        const row: cell[] = []
+        const row: node[] = []
         for (let y = 0; y < HEIGHT; y++) {
             const elem = document.createElement('div');
             elem.classList.add("node");
-            elem.dataset.type = CELL_TYPE.EMPTY;
+            elem.dataset.type = NODE_TYPE.EMPTY;
             row.push({
                 elem,
                 x,
@@ -55,17 +44,24 @@ export function createGrid(): cell[][] {
     grid.forEach((row) => {
         row.forEach((node) => {
             gridElem.append(node.elem);
-            node.elem.addEventListener('click', () => { clickedNode(node) });
+            node.elem.addEventListener('click', () => { fillNode(node) });
+            node.elem.addEventListener('contextmenu', (e: Event) => {
+                e.preventDefault();
+                clearNode(node)
+            });
         })
     })
     updateCSSVars();
     return grid;
 }
 
-export function clickedNode(node: cell) {
-    node.type = CELL_TYPE.WALL;
+export function fillNode(node: node) {
+    node.type = CURRENT_NODE;
 }
 
+export function clearNode(node: node) {
+    node.type = NODE_TYPE.EMPTY;
+}
 
 export function updateCSSVars() {
     document.documentElement.style.setProperty("--width", WIDTH.toString());
