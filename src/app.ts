@@ -43,26 +43,7 @@ class grid {
         this.end = null;
         this.nodes = [];
 
-        for (let x = 0; x < width; x++) {
-            const row: node[] = [];
-            for (let y = 0; y < height; y++) {
-                const elem = document.createElement('div');
-                row.push(new node(x, y, elem));
-            }
-            this.nodes.push(row);
-        }
-
-        this.nodes.forEach((row: node[]) => {
-            row.forEach((node: node) => {
-                $gridElem.append(node.elem);
-                node.elem.addEventListener('click', () => { this.fillNode(node) });
-                node.elem.addEventListener('contextmenu', (e: Event) => {
-                    e.preventDefault();
-                    this.clearNode(node);
-                });
-            })
-        })
-
+        this.resetGrid(width, height);
     }
     fillNode(curr_node: node) {
         if (this.mode == NODE_TYPE.START) {
@@ -88,14 +69,49 @@ class grid {
         }
         curr_node.type = NODE_TYPE.EMPTY;
     }
+
+    resetGrid(width: number, height: number) {
+        this.width = width;
+        this.height = height;
+
+        document.documentElement.style.setProperty("--width", width.toString());
+        document.documentElement.style.setProperty("--height", height.toString());
+
+        while ($gridElem.firstChild) {
+            $gridElem.firstChild.remove()
+        }
+        this.nodes = [];
+
+        for (let x = 0; x < width; x++) {
+            const row: node[] = [];
+            for (let y = 0; y < height; y++) {
+                row.push(new node(x, y, document.createElement('div')));
+            }
+            this.nodes.push(row);
+        }
+
+        this.nodes.forEach((row: node[]) => {
+            row.forEach((node: node) => {
+                $gridElem.append(node.elem);
+                node.elem.addEventListener('click', () => { this.fillNode(node) });
+                node.elem.addEventListener('contextmenu', (e: Event) => {
+                    e.preventDefault();
+                    this.clearNode(node);
+                });
+            })
+        })
+    }
 }
 
-let width = 20;
-let height = 10;
-document.documentElement.style.setProperty("--width", width.toString());
-document.documentElement.style.setProperty("--height", height.toString());
 
-let new_grid = new grid(20, 10);
+function main() {
+    let myGrid = new grid(20, 10);
+    $updateGridBtn.addEventListener('click', () => {
+        myGrid.resetGrid(Number($widthInput.value), Number($heightInput.value))
+    });
+}
+
+main()
 
 
 /* import { gridElem, updateGridBtn, widthInput, heightInput, nodeTypeSelector, NODE_TYPE, node } from './types.js';
@@ -120,71 +136,4 @@ export function selectNodeType(e: Event) {
     CURRENT_MODE = (<HTMLOptionElement>e.target).value;
 }
 
-export function createGrid(GRID: node[][], width: number, height: number): [number, number] {
-    [width, height] = updateDimensions(width, height);
-    while (gridElem.firstChild) {
-        gridElem.removeChild(gridElem.firstChild);
-    }
-
-    GRID.length = 0;
-
-    for (let x = 0; x < width; x++) {
-        const row: node[] = []
-        for (let y = 0; y < height; y++) {
-            const elem = document.createElement('div');
-            elem.classList.add("node");
-            elem.dataset.type = NODE_TYPE.EMPTY;
-            row.push({
-                elem,
-                x,
-                y,
-                get type() { return elem.dataset.type! },
-                set type(value: string) { this.elem.dataset.type = value }
-            });
-        }
-        GRID.push(row);
-    }
-    GRID.forEach((row) => {
-        row.forEach((node) => {
-            gridElem.append(node.elem);
-            node.elem.addEventListener('click', () => { fillNode(node) });
-            node.elem.addEventListener('contextmenu', (e: Event) => {
-                e.preventDefault();
-                clearNode(node)
-            });
-        })
-    })
-    return [width, height];
-}
-
-export function fillNode(node: node) {
-    if (CURRENT_MODE == NODE_TYPE.START) {
-        if (start_node !== null) {
-            start_node.type = NODE_TYPE.EMPTY;
-        }
-        start_node = node;
-    } else if (CURRENT_MODE == NODE_TYPE.END) {
-        if (end_node !== null) {
-            end_node.type = NODE_TYPE.EMPTY;
-        }
-        end_node = node;
-    }
-    node.type = CURRENT_MODE;
-}
-
-export function clearNode(node: node) {
-    if (CURRENT_MODE == NODE_TYPE.START) {
-        start_node = null;
-    } else if (CURRENT_MODE == NODE_TYPE.END) {
-        end_node = null;
-    }
-    node.type = NODE_TYPE.EMPTY;
-}
-
-export function updateDimensions(width: number, height: number): [width: number, height: number] {
-    width = Number(widthInput.value);
-    height = Number(heightInput.value);
-    document.documentElement.style.setProperty("--width", width.toString());
-    document.documentElement.style.setProperty("--height", height.toString());
-    return [width, height];
-} */
+*/
