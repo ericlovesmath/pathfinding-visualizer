@@ -1,4 +1,77 @@
-import { gridElem, updateGridBtn, widthInput, heightInput, nodeTypeSelector, NODE_TYPE, node } from './types.js';
+import { $gridElem, $updateGridBtn, $widthInput, $heightInput, $nodeTypeSelector } from './types.js';
+
+const NODE_TYPE = {
+    START: "start",
+    END: "end",
+    WALL: "wall",
+    EMPTY: "empty"
+}
+
+class node {
+    x: number;
+    y: number;
+    elem: HTMLDivElement;
+
+    constructor(x: number, y: number, elem: HTMLDivElement) {
+        this.x = x;
+        this.y = y;
+        elem.classList.add("node");
+        this.elem = elem;
+        this.type = NODE_TYPE.EMPTY;
+    }
+    get type() {
+        return this.elem.dataset.type!;
+    }
+    set type(value: string) {
+        this.elem.dataset.type = value;
+    }
+}
+
+class grid {
+    nodes: node[][];
+    start: node | null;
+    end: node | null;
+    width: number;
+    height: number;
+
+    constructor(width: number, height: number) {
+        this.width = width;
+        this.height = height;
+        this.start = null;
+        this.end = null;
+        this.nodes = [];
+
+        for (let x = 0; x < width; x++) {
+            const row: node[] = [];
+            for (let y = 0; y < height; y++) {
+                const elem = document.createElement('div');
+                row.push(new node(x, y, elem));
+            }
+            this.nodes.push(row);
+        }
+
+        this.nodes.forEach((row: node[]) => {
+            row.forEach((node: node) => {
+                $gridElem.append(node.elem);
+                /* node.elem.addEventListener('click', () => { fillNode(node) });
+                node.elem.addEventListener('contextmenu', (e: Event) => {
+                    e.preventDefault();
+                    clearNode(node);
+                }); */
+            })
+        })
+    }
+}
+
+let width = 20;
+let height = 10;
+document.documentElement.style.setProperty("--width", width.toString());
+document.documentElement.style.setProperty("--height", height.toString());
+
+let new_grid = new grid(20, 10);
+
+
+/* import { gridElem, updateGridBtn, widthInput, heightInput, nodeTypeSelector, NODE_TYPE, node } from './types.js';
 
 let CURRENT_MODE = NODE_TYPE.WALL;
 let start_node: node | null = null;
@@ -87,4 +160,4 @@ export function updateDimensions(width: number, height: number): [width: number,
     document.documentElement.style.setProperty("--width", width.toString());
     document.documentElement.style.setProperty("--height", height.toString());
     return [width, height];
-}
+} */
