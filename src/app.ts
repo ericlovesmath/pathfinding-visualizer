@@ -33,10 +33,12 @@ class grid {
     end: node | null;
     width: number;
     height: number;
+    mode: string;
 
     constructor(width: number, height: number) {
         this.width = width;
         this.height = height;
+        this.mode = NODE_TYPE.WALL; // TODO: Use enums instead?
         this.start = null;
         this.end = null;
         this.nodes = [];
@@ -53,13 +55,38 @@ class grid {
         this.nodes.forEach((row: node[]) => {
             row.forEach((node: node) => {
                 $gridElem.append(node.elem);
-                /* node.elem.addEventListener('click', () => { fillNode(node) });
+                node.elem.addEventListener('click', () => { this.fillNode(node) });
                 node.elem.addEventListener('contextmenu', (e: Event) => {
                     e.preventDefault();
-                    clearNode(node);
-                }); */
+                    this.clearNode(node);
+                });
             })
         })
+
+    }
+    fillNode(curr_node: node) {
+        if (this.mode == NODE_TYPE.START) {
+            // TODO: Can this be done with nullish operators?
+            if (this.start !== null) {
+                this.start.type = NODE_TYPE.EMPTY;
+            }
+            this.start = curr_node;
+        } else if (this.mode == NODE_TYPE.END) {
+            if (this.end !== null) {
+                this.end.type = NODE_TYPE.EMPTY;
+            }
+            this.end = curr_node;
+        }
+        curr_node.type = this.mode;
+    }
+
+    clearNode(curr_node: node) {
+        if (this.mode == NODE_TYPE.START) {
+            this.start = null;
+        } else if (this.mode == NODE_TYPE.END) {
+            this.end = null;
+        }
+        curr_node.type = NODE_TYPE.EMPTY;
     }
 }
 
