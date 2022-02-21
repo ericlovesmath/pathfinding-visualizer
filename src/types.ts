@@ -18,13 +18,9 @@ type node = {
     type: string;
 }
 
-const POS_TYPE = {
-    NONE: { x: -1, y: -1 }
-}
-
 type pos = {
     x: number;
     y: number;
 }
 
-export { gridElem, updateGridBtn, widthInput, heightInput, nodeTypeSelector, NODE_TYPE, node, pos, POS_TYPE };
+export { gridElem, updateGridBtn, widthInput, heightInput, nodeTypeSelector, NODE_TYPE, node, pos };
