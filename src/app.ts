@@ -103,37 +103,14 @@ class grid {
     }
 }
 
-
 function main() {
     let myGrid = new grid(20, 10);
     $updateGridBtn.addEventListener('click', () => {
         myGrid.resetGrid(Number($widthInput.value), Number($heightInput.value))
     });
+    $nodeTypeSelector.addEventListener('click', (e: Event) => {
+        myGrid.mode = (<HTMLOptionElement>e.target).value;
+    })
 }
 
 main()
-
-
-/* import { gridElem, updateGridBtn, widthInput, heightInput, nodeTypeSelector, NODE_TYPE, node } from './types.js';
-
-let CURRENT_MODE = NODE_TYPE.WALL;
-let start_node: node | null = null;
-let end_node: node | null = null;
-
-main();
-
-function main() {
-    let width = 20;
-    let height = 10;
-    let GRID: node[][] = [];
-
-    [width, height] = createGrid(GRID, width, height);
-    updateGridBtn.addEventListener('click', () => { createGrid(GRID, width, height) });
-    nodeTypeSelector.addEventListener('click', selectNodeType);
-}
-
-export function selectNodeType(e: Event) {
-    CURRENT_MODE = (<HTMLOptionElement>e.target).value;
-}
-
-*/
