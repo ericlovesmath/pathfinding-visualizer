@@ -1,0 +1,1 @@
+{"version":3,"file":"astar.js","sourceRoot":"","sources":["../src/astar.ts"],"names":[],"mappings":"AAEA,MAAM,UAAU,KAAK,CAAC,IAAU;IAC5B,OAAO,CAAC,GAAG,CAAC,OAAO,CAAC,CAAC;AACzB,CAAC;AAED,SAAS,QAAQ,CAAC,IAAU,EAAE,IAAU;IACpC,IAAI,KAAK,GAAW,EAAE,CAAC;IAGvB,OAAO,KAAK,CAAC;AAEjB,CAAC"}

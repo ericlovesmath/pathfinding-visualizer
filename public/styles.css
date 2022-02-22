@@ -3,7 +3,6 @@
     -webkit-box-sizing: border-box; 
      box-sizing: border-box; 
 }
-
 /* Main */
 
 body {
@@ -27,6 +26,8 @@ header {
 
 #navbar {
     display: flex;
+    justify-content: center;
+    align-items: center;
     margin: 0px;
     margin-bottom: 50px;
     background-color: #76B7DA;
@@ -54,14 +55,17 @@ footer {
     display: inline-grid;
     grid-template-columns: repeat(var(--width), 40px);
     grid-template-rows: repeat(var(--height), 40px);
-    border: 2px solid black;
+    border: 5px solid black;
+    border-radius: 5px;
     padding: 2px;
     gap: 2px;
 }
 
 #grid .node {
     border: 1px solid black;
+    border-radius: 5px;
     background-color: #e1e4e5;
+    transition: background-color 0.2s;
 }
 
 #grid .node[data-type="empty"] {
@@ -89,8 +93,9 @@ a:hover {
 }
 
 #navbar input,button,select {
-    width: 60px;
-    margin: 10px;
+    width: clamp(60px, 70px, 150px);
+    min-height: 1em;
+    margin: 1em;
     box-sizing: border-box;
 }
 
