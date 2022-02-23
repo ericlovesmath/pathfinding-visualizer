@@ -5,39 +5,34 @@ export function astar(grid) {
         return;
     }
     let curr;
-    let open = [grid.start];
+    let visiting = [grid.start];
+    grid.start.cost.g = 0;
     grid.start.cost.h = nodeDist(grid.start, grid.end);
-    grid.start.elem.textContent = grid.start.cost.f.toString();
     let reachedEnd = false;
     while (!reachedEnd) {
-        open.sort((a, b) => { return a.cost.f < b.cost.f ? 1 : -1; });
-        curr = open.pop();
-        if (curr.type === NODE_TYPE.END) {
-            reachedEnd = true;
-            break;
-        }
+        visiting.sort((a, b) => { return a.cost.f < b.cost.f ? 1 : -1; });
+        curr = visiting.pop();
         if (curr.type !== NODE_TYPE.START) {
             curr.type = NODE_TYPE.VISITED;
         }
         neighboringNodes(grid, curr).forEach((node) => {
             if (node.type == NODE_TYPE.END) {
-                node.cost.prev_node = curr;
+                node.prev_node = curr;
                 reachedEnd = true;
             }
-            if (node.type == NODE_TYPE.EMPTY ||
-                (node.type == NODE_TYPE.VISITING &&
-                    getCosts(grid, node, curr).f < node.cost.f)) {
+            else if (node.type == NODE_TYPE.EMPTY ||
+                (node.type == NODE_TYPE.VISITING && getCosts(grid, node, curr).f < node.cost.f)) {
                 setCosts(grid, node, curr);
-                node.cost.prev_node = curr;
+                node.prev_node = curr;
                 node.type = NODE_TYPE.VISITING;
-                open.push(node);
+                visiting.push(node);
             }
         });
     }
-    curr = grid.end;
-    while (curr.cost.prev_node.type !== NODE_TYPE.START) {
-        curr.cost.prev_node.type = NODE_TYPE.PATH;
-        curr = curr.cost.prev_node;
+    curr = grid.end.prev_node;
+    while (curr.type !== NODE_TYPE.START) {
+        curr.type = NODE_TYPE.PATH;
+        curr = curr.prev_node;
     }
 }
 function nodeDist(node1, node2) {

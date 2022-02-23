@@ -1,56 +1,52 @@
 import { node, grid } from './grid.js';
 import { astar_cost, NODE_TYPE } from './types.js';
 
+/** Visualized A-star Search in one step */
 export function astar(grid: grid) {
-    // Verify Start/End Nodes
+
+    // Verify Start/End Nodes exist
     if (grid.start === null || grid.end === null) {
         alert('Missing Start/End Node!');
         return;
     }
 
+    // Add Starting node to visiting list
     let curr: node;
-    let open: node[] = [grid.start];
+    let visiting: node[] = [grid.start];
+    grid.start.cost.g = 0;
     grid.start.cost.h = nodeDist(grid.start, grid.end);
-    grid.start.elem.textContent = grid.start.cost.f.toString();
 
-    // console.log("grid.start cost", grid.start.cost)
-    // console.log("init", grid.start)
-    // console.log("init", JSON.parse(JSON.stringify(open)))
-
+    // Iterate through search until end node is reached
     let reachedEnd = false;
-    // LOOP
     while (!reachedEnd) {
-        // for (let x = 0; x < 20; x++) {
-        open.sort((a, b) => { return a.cost.f < b.cost.f ? 1 : -1 })
-        curr = open.pop()!;
-        if (curr.type === NODE_TYPE.END) {
-            reachedEnd = true;
-            break;
-        }
+
+        // Identify node with lowest f cost to visit
+        visiting.sort((a, b) => { return a.cost.f < b.cost.f ? 1 : -1 })
+        curr = visiting.pop()!;
         if (curr.type !== NODE_TYPE.START) {
             curr.type = NODE_TYPE.VISITED;
         }
+
+        // Update costs nodes neighboring current node
         neighboringNodes(grid, curr).forEach((node: node) => {
             if (node.type == NODE_TYPE.END) {
-                node.cost.prev_node = curr;
+                node.prev_node = curr;
                 reachedEnd = true;
-            }
-            if (node.type == NODE_TYPE.EMPTY ||
-                (node.type == NODE_TYPE.VISITING &&
-                    getCosts(grid, node, curr).f < node.cost.f)) {
+            } else if (node.type == NODE_TYPE.EMPTY ||
+                (node.type == NODE_TYPE.VISITING && getCosts(grid, node, curr).f < node.cost.f)) {
                 setCosts(grid, node, curr);
-                node.cost.prev_node = curr;
+                node.prev_node = curr;
                 node.type = NODE_TYPE.VISITING
-                open.push(node);
+                visiting.push(node);
             }
         })
     }
 
-    // Backtrack
-    curr = grid.end;
-    while (curr.cost.prev_node!.type !== NODE_TYPE.START) {
-        curr.cost.prev_node!.type = NODE_TYPE.PATH;
-        curr = curr.cost.prev_node!;
+    // Backtrack and highlight path
+    curr = grid.end.prev_node!;
+    while (curr.type !== NODE_TYPE.START) {
+        curr.type = NODE_TYPE.PATH;
+        curr = curr.prev_node!;
     }
 
 }
@@ -68,7 +64,8 @@ function nodeDist(node1: node, node2: node): number {
     }
 }
 
-/** Returns nodes in Moore neighborhood */
+/** Returns nodes in Moore neighborhood
+* Does not return Visited, Start, or End nodes */
 function neighboringNodes(grid: grid, node: node): node[] {
     let nodes: node[] = [];
     const offsets = [[-1, -1], [-1, 0], [-1, 1], [0, -1], [0, 1], [1, -1], [1, 0], [1, 1]];
@@ -83,7 +80,6 @@ function neighboringNodes(grid: grid, node: node): node[] {
             nodes.push(grid.nodes[y][x]);
         }
     })
-    // console.log(nodes.length, nodes);
     return nodes;
 }
 
@@ -93,6 +89,7 @@ function getCosts(grid: grid, node: node, prev: node): astar_cost {
     return { g, h, f: g + h };
 }
 
+/** Sets g, h, and f costs of a node given the previous node */
 function setCosts(grid: grid, node: node, prev: node) {
     let costs = getCosts(grid, node, prev);
     node.cost.g = costs.g;

@@ -10,8 +10,8 @@ export class node {
             g: 0,
             h: 0,
             get f() { return this.g + this.h; },
-            prev_node: null
         };
+        this.prev_node = null;
     }
     get type() {
         return this.elem.dataset.type;
@@ -80,6 +80,10 @@ export class grid {
                 });
             });
         });
+        this.start = this.nodes[0][0];
+        this.end = this.nodes[height - 1][width - 1];
+        this.nodes[0][0].type = NODE_TYPE.START;
+        this.nodes[height - 1][width - 1].type = NODE_TYPE.END;
     }
 }
 //# sourceMappingURL=grid.js.map

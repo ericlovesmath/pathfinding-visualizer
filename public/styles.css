@@ -107,6 +107,8 @@ a:hover {
   color: blue;
 }
 
+/* Nav Bar */
+
 #navbar input,button,select {
     width: clamp(60px, 70px, 150px);
     min-height: 1em;
