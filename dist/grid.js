@@ -6,7 +6,12 @@ export class node {
         elem.classList.add("node");
         this.elem = elem;
         this.type = NODE_TYPE.EMPTY;
-        this.cost = { g: 0, h: 0, f: 0, prev_node: null };
+        this.cost = {
+            g: 0,
+            h: 0,
+            get f() { return this.g + this.h; },
+            prev_node: null
+        };
     }
     get type() {
         return this.elem.dataset.type;
@@ -58,9 +63,9 @@ export class grid {
             $gridElem.firstChild.remove();
         }
         this.nodes = [];
-        for (let x = 0; x < width; x++) {
+        for (let y = 0; y < height; y++) {
             const row = [];
-            for (let y = 0; y < height; y++) {
+            for (let x = 0; x < width; x++) {
                 row.push(new node(x, y, document.createElement('div')));
             }
             this.nodes.push(row);

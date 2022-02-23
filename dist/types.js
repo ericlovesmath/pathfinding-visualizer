@@ -10,6 +10,7 @@ export const NODE_TYPE = {
     WALL: "wall",
     EMPTY: "empty",
     VISITED: "visited",
-    VISITING: "visiting"
+    VISITING: "visiting",
+    PATH: "path",
 };
 //# sourceMappingURL=types.js.map

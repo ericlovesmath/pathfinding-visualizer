@@ -6,7 +6,12 @@ export class node {
     elem: HTMLDivElement;
 
     // g: Distance from Starting Node, h: distance from End Node, f: g+h
-    cost: { g: number, h: number, f: number, prev_node: node | null };
+    cost: {
+        g: number,
+        h: number,
+        f: number,
+        prev_node: node | null
+    };
 
     constructor(x: number, y: number, elem: HTMLDivElement) {
         this.x = x;
@@ -15,7 +20,12 @@ export class node {
         this.elem = elem;
         this.type = NODE_TYPE.EMPTY;
 
-        this.cost = { g: 0, h: 0, f: 0, prev_node: null };
+        this.cost = {
+            g: 0,
+            h: 0,
+            get f() { return this.g + this.h },
+            prev_node: null
+        };
     }
 
     get type() {
@@ -83,9 +93,9 @@ export class grid {
         }
         this.nodes = [];
 
-        for (let x = 0; x < width; x++) {
+        for (let y = 0; y < height; y++) {
             const row: node[] = [];
-            for (let y = 0; y < height; y++) {
+            for (let x = 0; x < width; x++) {
                 row.push(new node(x, y, document.createElement('div')));
             }
             this.nodes.push(row);
