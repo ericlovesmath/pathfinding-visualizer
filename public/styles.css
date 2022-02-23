@@ -64,6 +64,9 @@ footer {
 #grid .node {
     border: 1px solid black;
     border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     background-color: #e1e4e5;
     transition: background-color 0.2s;
 }
@@ -82,6 +85,18 @@ footer {
 
 #grid .node[data-type="end"] {
     background-color: red;
+}
+
+#grid .node[data-type="visiting"] {
+    background-color: yellow;
+}
+
+#grid .node[data-type="visited"] {
+    background-color: pink;
+}
+
+#grid .node[data-type="path"] {
+    background-color: lightblue;
 }
 
 a:visited {
