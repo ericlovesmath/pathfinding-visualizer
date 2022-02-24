@@ -31,7 +31,9 @@ Criticisms of the code base are also welcome, the developer is in the process of
 
 - A-Star: Remove delays when jumping to non-adjacent node
 - Verify functionality for browsers outside of Firefox
-- Prevent drawing while simulating or after simulation is complete
+- Prevent drawing while simulating
+    - Algorithmically better way to clear grid when not needed
+    - Disable Simulate button while simulating
 - Determine better method of hosting demo
 - Work on Djikstra's Algorithm
 

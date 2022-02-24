@@ -28,14 +28,15 @@ export class node {
     }
 
     get type() {
-        return this.elem.dataset.type!; }
+        return this.elem.dataset.type!;
+    }
     set type(value: string) {
         this.elem.dataset.type = value;
     }
 }
 
 /** Contains 2d array of *nodes* 
-* Mostly a wrapper of nodes[][] for convenience */ 
+* Mostly a wrapper of nodes[][] for convenience */
 export class grid {
     nodes: node[][];
     start: node | null;
@@ -56,7 +57,7 @@ export class grid {
     }
 
     /** Sets type of *Node* in *Grid* to the current *mode*
-    * *mode* is set in class *Grid*, managed by the "Node Type" Selector */ 
+    * *mode* is set in class *Grid*, managed by the "Node Type" Selector */
     fillNode(curr_node: node) {
         if (this.mode == NODE_TYPE.START) {
             if (this.start !== null) {
@@ -72,7 +73,7 @@ export class grid {
         curr_node.type = this.mode;
     }
 
-    /** Sets *Node* in *Grid* to type *empty* */ 
+    /** Sets *Node* in *Grid* to type *empty* */
     clearNode(curr_node: node) {
         if (this.mode == NODE_TYPE.START) {
             this.start = null;
@@ -111,9 +112,13 @@ export class grid {
         this.nodes.forEach((row: node[]) => {
             row.forEach((node: node) => {
                 $gridElem.append(node.elem);
-                node.elem.addEventListener('click', () => { this.fillNode(node) });
+                node.elem.addEventListener('click', () => {
+                    this.clearSimulation();
+                    this.fillNode(node)
+                });
                 node.elem.addEventListener('contextmenu', (e: Event) => {
                     e.preventDefault();
+                    this.clearSimulation();
                     this.clearNode(node);
                 });
             })
@@ -121,8 +126,25 @@ export class grid {
 
         // Initialize Start and End positions
         this.start = this.nodes[0][0];
-        this.end = this.nodes[height-1][width-1];
+        this.end = this.nodes[height - 1][width - 1];
         this.nodes[0][0].type = NODE_TYPE.START;
-        this.nodes[height-1][width-1].type = NODE_TYPE.END;
+        this.nodes[height - 1][width - 1].type = NODE_TYPE.END;
+    }
+
+    /** Sets all non start, end, or wall nodes to empty
+    * Intended to clear artifacts after simulation */
+    clearSimulation() {
+        this.nodes.forEach((row: node[]) => {
+            row.forEach((node: node) => {
+                if (node.type !== NODE_TYPE.START &&
+                    node.type !== NODE_TYPE.END &&
+                    node.type !== NODE_TYPE.WALL) {
+                    node.type = NODE_TYPE.EMPTY;
+                }
+                node.elem.textContent = "";
+            })
+        })
+
+
     }
 }

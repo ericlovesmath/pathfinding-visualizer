@@ -18,6 +18,7 @@ function main() {
 
     // Simulate Button, Only works on A-Star for now
     $simulateBtn.addEventListener('click', () => {
+        myGrid.clearSimulation();
         astar(myGrid);
     })
 }
