@@ -88,10 +88,12 @@ footer {
 }
 
 #grid .node[data-type="visiting"] {
+    color: darkgray;
     background-color: yellow;
 }
 
 #grid .node[data-type="visited"] {
+    color: darkgray;
     background-color: pink;
 }
 
