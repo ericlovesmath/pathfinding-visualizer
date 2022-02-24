@@ -2,7 +2,7 @@ import { node, grid } from './grid.js';
 import { astar_cost, NODE_TYPE } from './types.js';
 
 /** Visualized A-star Search in one step */
-export function astar(grid: grid) {
+export async function astar(grid: grid) {
 
     // Verify Start/End Nodes exist
     if (grid.start === null || grid.end === null) {
@@ -16,18 +16,23 @@ export function astar(grid: grid) {
     grid.start.cost.g = 0;
     grid.start.cost.h = nodeDist(grid.start, grid.end);
 
+    console.log(grid);
+
     // Iterate through search until end node is reached
     let reachedEnd = false;
     while (!reachedEnd) {
 
         // Identify node with lowest f cost to visit
-        visiting.sort((a, b) => { return a.cost.f < b.cost.f ? 1 : -1 })
+        visiting.sort((a, b) => { return a.cost.f == b.cost.f ? 0 : a.cost.f < b.cost.f ? 1 : -1 })
         curr = visiting.pop()!;
         if (curr.type !== NODE_TYPE.START) {
             curr.type = NODE_TYPE.VISITED;
         }
 
-        // Update costs nodes neighboring current node
+        // Testing Sleep, TODO: This stutters when jumping to non-adjavent nodes
+        await sleep(50);
+
+        // Update costs of nodes neighboring current node, adds to "visiting" if available
         neighboringNodes(grid, curr).forEach((node: node) => {
             if (node.type == NODE_TYPE.END) {
                 node.prev_node = curr;
@@ -45,6 +50,8 @@ export function astar(grid: grid) {
     // Backtrack and highlight path
     curr = grid.end.prev_node!;
     while (curr.type !== NODE_TYPE.START) {
+        // Testing Sleep, TODO: This stutters when jumping to non-adjavent nodes
+        await sleep(50);
         curr.type = NODE_TYPE.PATH;
         curr = curr.prev_node!;
     }
@@ -96,3 +103,9 @@ function setCosts(grid: grid, node: node, prev: node) {
     node.cost.h = costs.h;
     node.elem.textContent = node.cost.f.toString();
 }
+
+/** Sleeps for *ms* milliseconds */
+function sleep(ms: number) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
