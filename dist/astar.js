@@ -7,9 +7,10 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import { NODE_TYPE } from './types.js';
+import { $simulateBtn, NODE_TYPE } from './types.js';
 export function astar(grid) {
     return __awaiter(this, void 0, void 0, function* () {
+        $simulateBtn.disabled = true;
         if (grid.start === null || grid.end === null) {
             alert('Missing Start/End Node!');
             return;
@@ -46,6 +47,7 @@ export function astar(grid) {
             curr.type = NODE_TYPE.PATH;
             curr = curr.prev_node;
         }
+        $simulateBtn.disabled = false;
     });
 }
 function nodeDist(node1, node2) {
