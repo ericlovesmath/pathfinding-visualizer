@@ -10,6 +10,7 @@ function main() {
         myGrid.mode = e.target.value;
     });
     $simulateBtn.addEventListener('click', () => {
+        myGrid.clearSimulation();
         astar(myGrid);
     });
 }

@@ -16,8 +16,6 @@ export async function astar(grid: grid) {
     grid.start.cost.g = 0;
     grid.start.cost.h = nodeDist(grid.start, grid.end);
 
-    console.log(grid);
-
     // Iterate through search until end node is reached
     let reachedEnd = false;
     while (!reachedEnd) {

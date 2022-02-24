@@ -18,7 +18,6 @@ export function astar(grid) {
         let visiting = [grid.start];
         grid.start.cost.g = 0;
         grid.start.cost.h = nodeDist(grid.start, grid.end);
-        console.log(grid);
         let reachedEnd = false;
         while (!reachedEnd) {
             visiting.sort((a, b) => { return a.cost.f == b.cost.f ? 0 : a.cost.f < b.cost.f ? 1 : -1; });
