@@ -1,11 +1,12 @@
 import { node, grid } from './grid.js';
-import { $simulateBtn, astar_cost, NODE_TYPE } from './types.js';
+import { $gridContainer, $simulateBtn, astar_cost, NODE_TYPE } from './types.js';
 
 /** Visualized A-star Search in one step */
 export async function astar(grid: grid) {
 
     // Disable simulation while running
     $simulateBtn.disabled = true;
+    $gridContainer.style.pointerEvents = "none";
 
     // Verify Start/End Nodes exist
     if (grid.start === null || grid.end === null) {
@@ -59,6 +60,7 @@ export async function astar(grid: grid) {
 
     // Enable simulation button after completion
     $simulateBtn.disabled = false;
+    $gridContainer.style.pointerEvents = "all";
 
 }
 

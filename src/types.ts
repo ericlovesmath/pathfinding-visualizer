@@ -4,6 +4,7 @@ export const $widthInput = document.querySelector('#width-input') as HTMLInputEl
 export const $heightInput = document.querySelector('#height-input') as HTMLInputElement;
 export const $nodeTypeSelector = document.querySelector('.select-node-type') as HTMLSelectElement;
 export const $simulateBtn = document.querySelector('#simulate-button') as HTMLSelectElement;
+export const $gridContainer = document.querySelector('#container') as HTMLDivElement;
 
 /** Connects CSS and *Node* classifications */
 export const NODE_TYPE = {
