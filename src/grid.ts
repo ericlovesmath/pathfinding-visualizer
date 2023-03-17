@@ -17,21 +17,22 @@ export class node {
         this.y = y;
         elem.classList.add("node");
         this.elem = elem;
-        this.type = NODE_TYPE.EMPTY;
+        this.elem.dataset.type = NODE_TYPE.EMPTY;
 
         this.cost = {
             g: 0,
             h: 0,
             get f() { return this.g + this.h },
         };
+
         this.prev_node = null;
     }
 
     get type() {
         return this.elem.dataset.type!;
     }
-    set type(value: string) {
-        this.elem.dataset.type = value;
+    set type(node_type: string) {
+        this.elem.dataset.type = node_type;
     }
 }
 
@@ -103,7 +104,9 @@ export class grid {
         for (let y = 0; y < height; y++) {
             const row: node[] = [];
             for (let x = 0; x < width; x++) {
-                row.push(new node(x, y, document.createElement('div')));
+                let newNode = new node(x, y, document.createElement('div'));
+                newNode.type = NODE_TYPE.EMPTY;
+                row.push(newNode);
             }
             this.nodes.push(row);
         }
@@ -113,6 +116,7 @@ export class grid {
             row.forEach((node: node) => {
                 $gridElem.append(node.elem);
                 node.elem.addEventListener('click', () => {
+                    console.log("Clicked Node", node.type, this.mode);
                     this.clearSimulation();
                     this.fillNode(node)
                 });
@@ -144,7 +148,5 @@ export class grid {
                 node.elem.textContent = "";
             })
         })
-
-
     }
 }

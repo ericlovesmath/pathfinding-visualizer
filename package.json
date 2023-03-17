@@ -4,13 +4,10 @@
   "description": "Pathfinding visualizer in pure HTML/CSS/TS to understand web development!",
   "main": "index.js",
   "scripts": {
-    "dev": "live-server",
-    "watch": "tsc --watch",
-    "build": "tsc",
-    "test": "jest",
-    "lint": "eslint src/ --ext .js,.jsx,.ts,.tsx",
-    "clean": "rm -rf dist build",
-    "deploy": "npm run build && gh-pages -d ."
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "clean": "rm -rf dist build"
   },
   "repository": {
     "type": "git",
@@ -19,15 +16,15 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "homepage": "https://ericlovesmath.github.io/pathfinding-visualizer/",
+  "homepage": "https://www.ericchanlee.com/pathfinding-visualizer/",
   "bugs": {
     "url": "https://github.com/ericlovesmath/pathfinding-visualizer/issues"
   },
   "devDependencies": {
     "@types/node": "^17.0.18",
-    "gh-pages": "^3.2.3",
-    "live-server": "^1.2.1",
-    "ts-node": "^10.5.0",
     "typescript": "^4.5.5"
+  },
+  "dependencies": {
+    "vite": "^4.2.0"
   }
 }
